@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <title>🥰 Evaluación N°1</title>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.js"></script>
+        <script src="https://unpkg.com/ml5@1/dist/ml5.js"></script>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <header>
+            <p>
+                <a href="index.html" >Hola</a>
+                <a href="page-1.html">BodyPose</a>
+                <a href="page-2.html">BodySegmentation</a>
+                <a href="page-3.html">HandPose</a>
+                <a href="page-4.html">FaceMesh</a>
+                <a href="page-5.html"class="activo">ImageClassifier</a>
+            </p>
+            <h1>ImageClassifier</h1>
+        </header>
+        <main></main>
+        <!--active este botón-->
+        <aside>
+            <button>🖼️ DESCARGA</button>
+        </aside>
+        <!-- Lo que sigue depende de usted -->
+        <script>
+            function setup() {
+                createCanvas(windowWidth, windowHeight);
+                //repita un mismo background en el style.css y en todos los script
+                background("#292929");
+            }
+/*
+ * 👋 Hello! This is an ml5.js example made and shared with ❤️.
+ * Learn more about the ml5.js project: https://ml5js.org/
+ * ml5.js license and Code of Conduct: https://github.com/ml5js/ml5-next-gen/blob/main/LICENSE.md
+ *
+ * This example demonstrates detecting objects in an image through ml5.imageClassifier.
+ */
+
+// Initialize the Image Classifier method with MobileNet. A callback needs to be passed.
+let classifier;
+
+// A variable to hold the image we want to classify
+let img;
+
+// Variables for displaying the results on the canvas
+let label = "";
+let confidence = "";
+
+function preload() {
+  classifier = ml5.imageClassifier("MobileNet");
+  img = loadImage("https://diseno.uc.cl/wp-content/uploads/2014/11/faco-uc-2.jpg");
+}
+
+function setup() {
+  createCanvas(400, 400);
+  classifier.classify(img, gotResult);
+  image(img, 0, 0, width, height);
+}
+
+// Callback function for when classification has finished
+function gotResult(results) {
+  // The results are in an array ordered by confidence
+  console.log(results);
+
+  // Display the results on the canvas
+  fill(255);
+  stroke(0);
+  textSize(18);
+  label = "Label: " + results[0].label;
+  confidence = "Confidence: " + nf(results[0].confidence, 0, 2);
+  text(label, 10, 360);
+  text(confidence, 10, 380);
+}
+
+
+ 
+
+        </script>
+    </body>
+</html>

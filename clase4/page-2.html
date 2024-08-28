@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <title>🥰 Evaluación N°1</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.js"></script>
+        <script src="https://unpkg.com/ml5@1/dist/ml5.js"></script>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <header>
+            <p>
+                <a href="index.html" >Hola</a>
+                <a href="page-1.html">BodyPose</a>
+                <a href="page-2.html"class="activo">BodySegmentation</a>
+                <a href="page-3.html">HandPose</a>
+                <a href="page-4.html">FaceMesh</a>
+                <a href="page-5.html">ImageClassifier</a>
+            </p>
+            <h1>BodySegmentation</h1>
+        </header>
+        <main></main>
+        <!--active este botón-->
+        <aside>
+            <button>🖼️ DESCARGA</button>
+        </aside>
+        <!-- Lo que sigue depende de usted -->
+        <script>
+            function setup() {
+                createCanvas(windowWidth, windowHeight);
+                //repita un mismo background en el style.css y en todos los script
+                background("#292929");
+            }
+
+            function draw() {
+            }
+
+            function foto() {
+                saveCanvas("nombre-del-ejemplo.jpg");
+            }
+
+            function windowResized() {
+                //repita un mismo background en el style.css y en todos los script
+                background("#292929");
+                resizeCanvas(windowWidth, windowHeight);
+            }
+            // Position variables
+
+            let circlePositionX = 200;
+            let circlePositionY = 200;
+
+            // Speed variables
+            let circleSpeedX = 2;
+            let circleSpeedY = 3;
+
+/*
+ * 👋 Hello! This is an ml5.js example made and shared with ❤️.
+ * Learn more about the ml5.js project: https://ml5js.org/
+ * ml5.js license and Code of Conduct: https://github.com/ml5js/ml5-next-gen/blob/main/LICENSE.md
+ *
+ * This example demonstrates segmenting a person by body parts with ml5.bodySegmentation.
+ */
+
+let bodySegmentation;
+let video;
+let segmentation;
+
+let options = {
+  maskType: "parts",
+};
+
+function preload() {
+  bodySegmentation = ml5.bodySegmentation("BodyPix", options);
+}
+
+function setup() {
+  createCanvas(640, 480);
+  // Create the video
+  video = createCapture(VIDEO);
+  video.size(640, 480);
+  video.hide();
+
+  bodySegmentation.detectStart(video, gotResults);
+}
+
+function draw() {
+  background(255);
+  image(video, 0, 0);
+  if (segmentation) {
+    image(segmentation.mask, 0, 0, width, height);
+    tint('green')
+  }
+}
+
+// callback function for body segmentation
+function gotResults(result) {
+  segmentation = result;
+}
+
+        </script>
+    </body>
+</html>
